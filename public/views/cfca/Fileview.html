@@ -1,0 +1,39 @@
+<meta charset="UTF-8">
+<div class="col-lg-12 col-sm-12 col-xs-12"
+	style="padding-left: 0px; padding-right: 0px;">
+	<div class="widget flat radius-bordered">
+		<div class="widget-header bordered-bottom bordered-sky">
+			<span class="widget-caption">文件详情</span>
+		</div>
+		<div class="widget-body grid-example">
+			<div class="row">
+				<div class="col-sm-2">
+					<span>文件名字:</span>
+				</div>
+				<div class="col-sm-6">
+					<span>&nbsp; {{obj.FILENAME}} </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<span>文件内容:</span>
+				</div>
+				<div class="col-sm-8">
+				<img width="" height="" src="data:image/jpeg;base64,{{obj.FILECONTENT}}"/>
+					<tr
+						ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+						<span>&nbsp;{{obj.data}} </span>
+					</tr>
+					<!-- <span>&nbsp; {{objs.data}} </span> -->
+					<!-- <img width="" height="" src="data:image/jpeg;base64,{{objs.data}}"/> -->
+				</div>
+			</div>
+			<div align="center" valign="middle">
+				<button id="no" class="btn btn-primary shiny" type="button"
+					ng-click="ok()">
+					<i class="fa fa-sign-out"></i> 返回
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

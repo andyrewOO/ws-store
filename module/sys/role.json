@@ -1,0 +1,122 @@
+{
+	"moduleName":"SysRole",
+	"tableName":"sys_role",
+	"configPath":"sys/role",
+	"moduleDesc":"角色信息",
+	"customerJs":{
+		"list":"sys/rolelist.js",
+		"view":"sys/roleview.js",
+		"edit":"sys/roleedit.js",
+		"add":"sys/roleadd.js"
+	},
+	"moduleOp":[
+		{
+			"opName":"新增",
+			"position":"top",
+			"jsMethod":"goAdd",
+			"icon":"fa fa-plus",
+			"btnClass":"btn-primary shiny btn-sm"
+		},
+		{
+			"opName":"编辑",
+			"position":"row",
+			"jsMethod":"goEdit",
+			"icon":"fa fa-edit",
+			"btnClass":"btn-default btn-xs shiny blue icon-only tooltip-blue"
+		},
+		{
+			"opName":"删除",
+			"position":"row",
+			"jsMethod":"remove",
+			"icon":"fa fa-close",
+			"btnClass":"btn-default btn-xs shiny danger icon-only tooltip-blue"
+		},
+		{
+			"opName":"用户列表",
+			"position":"row",
+			"jsMethod":"userlist",
+			"icon":"fa fa-users",
+			"btnClass":"btn-default btn-xs shiny danger icon-only tooltip-blue"
+		},
+		{
+			"opName":"权限维护",
+			"position":"row",
+			"jsMethod":"roleauth",
+			"icon":"fa fa-list-ul",
+			"btnClass":"btn-default btn-xs shiny danger icon-only tooltip-blue"
+		},
+		{
+			"opName":"查看",
+			"position":"row",
+			"jsMethod":"view",
+			"icon":"fa fa-leanpub",
+			"btnClass":"btn-default btn-xs shiny blue icon-only tooltip-blue"
+		}
+		
+	],
+	"fieldInfo":[
+		{
+			"name":"roleId",
+			"db":{
+				"columnName":"role_id",
+				"columnType":"String"
+			},
+			"desc":"角色ID",
+			"showtype":"input",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+			
+		},
+		{
+			"name":"roleName",
+			"db":{
+				"columnName":"role_name",
+				"columnType":"String"
+			},
+			"desc":"角色名",
+			"showtype":"input",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+			
+		},
+		{
+			"name":"roleDesc",
+			"db":{
+				"columnName":"role_desc",
+				"columnType":"String"
+			},
+			"desc":"角色描述",
+			"showtype":"input",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+			
+		}
+	],
+	"pageInfo":{
+		"pageSize":9
+	}
+}

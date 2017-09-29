@@ -1,0 +1,50 @@
+﻿    <!-- Page Sidebar Header-->
+<!-- <div class="sidebar-header-wrapper"> -->
+<!--     <input type="text" class="searchinput" /> -->
+<!--     <i class="searchicon fa fa-search"></i> -->
+<!--     <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div> -->
+<!-- </div> -->
+<!-- /Page Sidebar Header -->
+<!-- Sidebar Menu -->
+<ul class="nav sidebar-menu" ng-controller="MenuTreeShowCtrl">
+    <!-- 动态菜单生成(限到三级菜单) -->
+    <li ui-sref-active="active" ng-repeat="obj in objs.colume">
+    	<a href="#" class="menu-dropdown" ng-if="obj.children != ''">
+    	<i class="menu-icon {{obj.icon}}"></i>
+            <span class="menu-text">{{obj.label}}</span>
+            <i class="menu-expand"></i>
+        </a>
+        <a ui-sref="app.menus({title:obj.label,desc:obj.label,url:obj.templateUrl,files:obj.loadfiles})" ng-if="obj.children == ''">
+    	<i class="menu-icon {{obj.icon}}"></i>
+            <span class="menu-text">{{obj.label}}</span>
+        </a>
+    	<ul class="submenu" ng-show="obj.children != ''">
+            <li ui-sref-active="active" ng-repeat="obj1 in obj.children">
+                <a href="#" class="menu-dropdown" ng-if="obj1.children != ''">
+		    	<i class="menu-icon {{obj1.icon}}"></i>
+		            <span class="menu-text">{{obj1.label}}</span>
+		            <i class="menu-expand"></i>
+		        </a>
+		        <a ui-sref="app.menus({title:obj1.label,desc:obj1.label,url:obj1.templateUrl,files:obj1.loadfiles})" ng-if="obj1.children == ''">
+		    	<i class="menu-icon {{obj1.icon}}"></i>
+		            <span class="menu-text">{{obj1.label}}</span>
+		        </a>
+		        <ul class="submenu" ng-show="obj1.children != ''">
+		            <li ui-sref-active="active" ng-repeat="obj2 in obj1.children">
+		                <a href="#" class="menu-dropdown" ng-if="obj2.children != ''">
+				    	<i class="menu-icon {{obj2.icon}}"></i>
+				            <span class="menu-text">{{obj2.label}}</span>
+				            <i class="menu-expand"></i>
+				        </a>
+				        <a ui-sref="app.menus({title:obj2.label,desc:obj2.label,url:obj2.templateUrl,files:obj2.loadfiles})" ng-if="obj2.children == ''">
+				    	<i class="menu-icon {{obj2.icon}}"></i>
+				            <span class="menu-text">{{obj2.label}}</span>
+				        </a>
+		            </li>
+		    	</ul>
+            </li>
+    	</ul>
+    </li>
+
+</ul>
+<!-- /Sidebar Menu -->

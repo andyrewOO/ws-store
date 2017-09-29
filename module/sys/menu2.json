@@ -1,0 +1,66 @@
+[
+	{
+		"id":"3",
+		"label":"系统管理",
+		"icon":"fa fa-gears",
+		"parent":"#",
+		"sort":99,
+		"templateUrl":"",
+		"loadfiles":""
+	}
+	,
+	{
+		"id":"31",
+		"label":"下行报文信息",
+		"icon":"fa fa-user",
+		"parent":"3",
+		"sort":2,
+		"templateUrl":"views/cfca/cfcaDownlist.html",
+		"loadfiles":"app/controllers/cfca/cfcaDownlist.js"
+	},
+	{
+		"id":"32",
+		"label":"上行报文信息",
+		"icon":"fa fa-group",
+		"parent":"3",
+		"sort":3,
+		"templateUrl":"views/cfca/cfcaUplist.html",
+		"loadfiles":"app/controllers/cfca/cfcaUplist.js"
+	},
+	{
+		"id":"33",
+		"label":"ESB报文信息",
+		"icon":"fa fa-group",
+		"parent":"3",
+		"sort":4,
+		"templateUrl":"views/cfca/ESBXmllist.html",
+		"loadfiles":"app/controllers/cfca/ESBXmllist.js"
+	},
+	{
+		"id":"34",
+		"label":"错误报文信息",
+		"icon":"fa fa-group",
+		"parent":"3",
+		"sort":5,
+		"templateUrl":"views/cfca/errorlist.html",
+		"loadfiles":"app/controllers/cfca/errorlist.js"
+	},
+	{
+		"id":"35",
+		"label":"强制措施查询",
+		"icon":"fa fa-group",
+		"parent":"3",
+		"sort":6,
+		"templateUrl":"views/cfca/Forcelist.html",
+		"loadfiles":"app/controllers/cfca/Forcelist.js"
+	},
+	{
+		"id":"36",
+		"label":"动态查询任务",
+		"icon":"fa fa-group",
+		"parent":"3",
+		"sort":7,
+		"templateUrl":"views/cfca/dynamicQuery.html",
+		"loadfiles":"app/controllers/cfca/dynamicQuery.js"
+	}
+]

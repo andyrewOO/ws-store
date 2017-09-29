@@ -1,0 +1,79 @@
+
+.padding-5{
+	padding-left : 5px;
+	padding-right : 5px;
+}
+
+.asign-bottom{
+	margin-bottom:0px;
+}
+
+.father-relative{
+	position:relative;
+}
+.son-absolute-asign-bottom{
+	position:absolute;
+	bottom:0px;
+}
+
+#userHeadImg{
+	display:block!important;
+}
+
+#userHeadcss{
+	border-left:0;
+}
+
+.navbar-headertitle{
+	position: absolute;
+	top: 12%;
+	float: left;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 200;
+	padding: 2px 0;
+	text-shadow: none;
+}
+
+.databox-virtex{
+    display: inline-block;
+    font-size: 0;
+    height: 65px;
+    margin-bottom: 12px;
+    min-width: 130px;
+    padding: 0;
+    vertical-align: top;
+    width: 100%;
+}
+
+.databox-virtex .databox-left-s {
+    color: #2dc3e8;
+    display: inline-block;
+    height: 65px;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    width: 65px;
+}
+
+.databox-virtex .databox-right-s {
+    color: #555;
+    display: inline-block;
+    height: 65px;
+    margin: 0;
+    padding: 5px 10px;
+    position: relative;
+    vertical-align: top;
+    width: calc(100% - 65px);
+}
+
+#borderAndBckg {
+	border: 0px solid transparent;
+	background : none;
+}
+
+#dateUnion {
+	min-width:240px;
+}

@@ -1,0 +1,115 @@
+<div ng-controller="SysUserListCtrl">
+	<div class="row">
+		<div class="col-lg-12 col-sm-12 col-xs-12">
+			<div class="widget no-header">
+				<div class="widget-body well with-footer">
+					<div class="form-group">
+						<a class="btn btn-primary shiny btn-sm" href="#" ng-click="goAdd()"> <i class="fa fa-plus"></i> 新增
+						</a>
+					</div>
+					<table class="table table-striped table-bordered table-hover table-condensed">
+						<thead class="bordered-blue">
+							<tr>
+								<th>序号</th>
+								<th>登录名</th>
+								<th>用户名</th>
+								<th>性别</th>
+								<th>生日</th>
+								<th>操作</th>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input id="login_name" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.login_name" name="login_name" /></td>
+								<td><input id="user_name" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.user_name" name="user_name" /></td>
+								<td><input id="sex" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.sex" name="sex" /></td>
+								<td><input id="birthday" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.birthday" name="birthday" /></td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+								<td>{{(objs.page.index-1)*objs.page.size+$index+1}}</td>
+								<td>{{obj.login_name}}</td>
+								<td>{{obj.user_name}}</td>
+								<td>{{obj.sex | sex}}</td>
+								<td>{{obj.birthday}}</td>
+								<td value="obj.id"><a class="btn btn-default btn-xs shiny blue icon-only tooltip-blue" tooltip-placement="top" tooltip="编辑" href="#" ng-click="goEdit(obj.id)"> <i class="fa fa-edit"></i>
+								</a> <a class="btn btn-default btn-xs shiny danger icon-only tooltip-blue" tooltip-placement="top" tooltip="删除" href="#" ng-click="remove(obj.id)"> <i class="fa fa-close"></i>
+								</a> <a class="btn btn-default btn-xs shiny blue icon-only tooltip-blue" tooltip-placement="top" tooltip="查看" href="#" ng-click="view(obj.id)"> <i class="fa fa-leanpub"></i>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="footer" style="margin-right: 10px;">
+						<pagination class="pagination-sm pull-right" total-items="objs.colume|filter:objs.filter|size" ng-model="objs.page.index" max-size="9" items-per-page="objs.page.size" boundary-links="true"></pagination>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var sexes = [ {
+		value : "male",
+		text : '男'
+	}, {
+		value : "famale",
+		text : '女'
+	} ];
+	app.filter('sex', function() {
+		return function(items) {
+			console.info(items);
+			for ( var a in sexes) {
+				if (sexes[a].value == items) {
+					return sexes[a].text
+				}
+			}
+			return "未知"
+		}
+	});
+
+	app.controller('SysUserListCtrl', [ '$rootScope', '$scope', 'skylineService', function($rootScope, $scope, skylineService) {
+		console.info('SysUserListCtrl');
+		//	skylineService.run(function() {
+
+		//	});
+
+		$scope.getAllRecords = function() {
+			skylineService.findAll("sys_user", function(rdata) {
+				console.info('tlist findAll');
+				$scope.objs = {};
+				$scope.objs.colume = rdata;
+				$scope.objs.page = {
+					size : 5,
+					index : 1
+				};
+				$scope.$apply();
+			});
+		};
+
+		$scope.getAllRecords();
+
+		$scope.goAdd = function() {
+			skylineService.gotoPage("views/sys/useradd.html");
+		}
+
+		$scope.remove = function(id) {
+			skylineService.deleteById("sys_user", id, function(rdata) {
+				if (rdata.isSucceeded == false) {
+					alert("删除数据记录失败=>\n" + rdata.message);
+				} else {
+					alert("删除成功");
+					$scope.getAllRecords();
+				}
+			});
+		}
+
+		$scope.view = function(id) {
+			skylineService.gotoPage("views/sys/userview.html");
+		}
+
+		$scope.goEdit = function(id) {
+			skylineService.gotoPage("views/sys/useredit.html");
+		}
+	} ]);
+</script>

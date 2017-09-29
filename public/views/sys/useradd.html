@@ -1,0 +1,93 @@
+<div class="col-lg-12 col-sm-12 col-xs-12" ng-controller="SysUserAddCtrl" style="padding-left: 0px; padding-right: 0px;">
+	<div class="widget flat radius-bordered">
+		<div class="widget-header bordered-bottom bordered-sky">
+			<span class="widget-caption">新增用户管理</span>
+		</div>
+		<div class="widget-body">
+			<div id="registration-form">
+				<form id="form1" role="form" name="form1" ng-submit="saveSysUser(form1.$invalid)" novalidate="novalidate">
+					<div style="display: none">
+						<input id="id" name="id" ng-model="obj.id" /> <input id="update_user" name="update_user" ng-model="obj.update_user" /> <input id="update_time" name="update_time" ng-model="obj.update_time" /> <input id="flag" name="flag" ng-model="obj.flag" />
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>登录名:</label> <span class="input-icon icon-right"> <input id="login_name" class="form-control" type="text" name="login_name" ng-model="obj.login_name" placeholder="输入登录名" required="" ng-minlength="1" ng-maxlength="50" /> <span class="error" ng-show="form1.login_name.$dirty &amp;&amp; form1.login_name.$error.required"> <font color="red">请输入登录名!</font>
+								</span> <span class="error" ng-show="form1.login_name.$dirty &amp;&amp; form1.login_name.$error.maxlength"> <font color="red">最大长度50个字符!</font>
+								</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>用户名:</label> <span class="input-icon icon-right"> <input id="user_name" class="form-control" type="text" name="user_name" ng-model="obj.user_name" placeholder="输入用户名" required="" ng-minlength="1" ng-maxlength="50" /> <span class="error" ng-show="form1.user_name.$dirty &amp;&amp; form1.user_name.$error.required"> <font color="red">请输入用户名!</font>
+								</span> <span class="error" ng-show="form1.user_name.$dirty &amp;&amp; form1.user_name.$error.maxlength"> <font color="red">最大长度50个字符!</font>
+								</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>性别:</label> <span class="input-icon icon-right"> <select id="sex" name="sex" required ng-model="obj.sex" class="form-control" ng-options="obj.text for obj in sexes track by obj.value">
+										<option value="">请选择</option>
+								</select>
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label>生日:</label> <span class="input-icon icon-right"> <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" name="birthday" id="birthday" ng-model="formData.birthday" onClick="WdatePicker({maxDate:'%y-%M-%d'})" placeholder="出生年月" /><i class="fa fa-calendar"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div align="center" valign="middle">
+						<button id="ok" class="btn btn-primary shiny" type="submit" ng-disabled="form1.$invalid">
+							<i class="fa fa-check"></i> 保存
+
+						</button>
+						<button id="no" class="btn btn-primary shiny" type="button" ng-click="gotoback()">
+							<i class="fa fa-sign-out"></i> 返回
+
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	app.controller('SysUserAddCtrl', [ '$rootScope', '$scope', 'skylineService', function($rootScope, $scope, skylineService) {
+		$scope.sexes = [ {
+			value : "male",
+			text : '男'
+		}, {
+			value : "famale",
+			text : '女'
+		} ];
+
+		$scope.obj = {};
+		$scope.obj.id = Math.random() + "";
+		$scope.obj.update_user = "admin";
+		$scope.obj.update_time = "2015-12-18 19:51:58:008";
+		$scope.obj.flag = "0";
+		$scope.saveSysUser = function(isValid) {
+			if (isValid) {
+				alert('必填项未填写!');
+				return;
+			}
+			var formdata = $('#form1').serializeObject();
+			skylineService.addRecord('sys_user', formdata, function(rdata) {
+				if (rdata.isSucceeded) {
+					alert("保存成功！");
+					$scope.gotoback();
+				} else {
+					alert("插入数据记录失败=>\n" + rdata.message);
+				}
+			});
+		}
+		$scope.gotoback = function() {
+			skylineService.gotoPage("views/sys/userlist.html");
+		}
+	} ]);
+</script>

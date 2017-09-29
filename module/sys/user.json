@@ -1,0 +1,127 @@
+{
+	"moduleName":"SysUser",
+	"tableName":"sys_user",
+	"configPath":"sys/user",
+	"moduleDesc":"用户信息",
+	"customerJs":{
+		"view":"sys/userview.js",
+		"edit":"sys/useredit.js",
+		"add":"sys/useradd.js"
+	},
+	"moduleOp":[
+		{
+			"opName":"新增",
+			"position":"top",
+			"jsMethod":"goAdd",
+			"icon":"fa fa-plus",
+			"btnClass":"btn-primary shiny btn-sm"
+		},
+		{
+			"opName":"编辑",
+			"position":"row",
+			"jsMethod":"goEdit",
+			"icon":"fa fa-edit",
+			"btnClass":"btn-default btn-xs shiny blue icon-only tooltip-blue"
+		},
+		{
+			"opName":"删除",
+			"position":"row",
+			"jsMethod":"remove",
+			"icon":"fa fa-close",
+			"btnClass":"btn-default btn-xs shiny danger icon-only tooltip-blue"
+		},
+		{
+			"opName":"查看",
+			"position":"row",
+			"jsMethod":"view",
+			"icon":"fa fa-leanpub",
+			"btnClass":"btn-default btn-xs shiny blue icon-only tooltip-blue"
+		}
+		
+	],
+	"fieldInfo":[
+		{
+			"name":"userId",
+			"db":{
+				"columnName":"user_id",
+				"columnType":"String"
+			},
+			"desc":"登录ID",
+			"showtype":"input",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+		},
+		{
+			"name":"userPsd",
+			"db":{
+				"columnName":"user_psd",
+				"columnType":"String"
+			},
+			"desc":"初始密码",
+			"showtype":"password",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":false,
+				"edit":false,
+				"add":true,
+				"view":false
+			}
+			
+		},
+		{
+			"name":"userName",
+			"db":{
+				"columnName":"user_name",
+				"columnType":"String"
+			},
+			"desc":"用户名称",
+			"showtype":"input",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+			
+		},
+		{
+			"name":"isOpen",
+			"db":{
+				"columnName":"is_open",
+				"columnType":"String"
+			},
+			"desc":"启用状态",
+			"showtype":"select",
+			"selectTag":"s_isOpen",
+			"filter":"f_isopen",
+			"validata":{
+				"maxLength":50,
+				"minLength":1
+			},
+			"show":{
+				"list":true,
+				"edit":true,
+				"add":true,
+				"view":true
+			}
+			
+		}],
+	"pageInfo":{
+		"pageSize":9
+	}
+}

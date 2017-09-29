@@ -1,0 +1,203 @@
+<div class="col-lg-12 col-sm-12 col-xs-12" ng-controller="SysRoleViewCtrl" style="padding-left: 0px; padding-right: 0px;">
+	<div class="widget radius-bordered" style="margin: 0 0 5px">
+		<div class="widget-header bordered-bottom bordered-sky">
+			<span class="widget-caption">角色权限维护</span>
+			<div class="widget-buttons buttons-bordered">
+				<button id="no" class="btn btn-primary shiny btn-sm" type="button" ng-click="gotoback()">
+					<i class="fa fa-sign-out"></i>返回
+				</button>
+			</div>
+		</div>
+		<div class="widget-body grid-example">
+			<div class="row">
+				<div class="col-sm-2">
+					<span>角色ID:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_id}}</span>
+				</div>
+				<div class="col-sm-2">
+					<span>角色名:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_name}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<span>角色描述:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_desc}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" ng-controller="MenuAuthCtrl">
+	<div class="col-lg-6 col-sm-6 col-xs-6" style="padding-right: 5px;">
+		<div class="widget radius-bordered">
+			<div class="widget-header bordered-bottom">
+				<span class="widget-caption">左树菜单列表</span>
+			</div>
+			<div class="widget-body well with-footer">
+				<span ng-if="doing_async">...loading...</span>
+				<abn-tree tree-data="menudata" tree-control="menuTree" on-select="menuHandler(branch)" expand-level="2" initial-selection="Granny Smith" icon-leaf="fa fa-file-o" icon-expand="fa fa-plus" icon-collapse="fa fa-minus"> </abn-tree>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-sm-6 col-xs-6" style="padding-left: 0px;">
+		<div class="widget radius-bordered">
+			<div class="widget-header bordered-bottom">
+				<span class="widget-caption">操作权限-{{menuName}}</span>
+			</div>
+			<div class="widget-body well">
+				<div class="row">
+					<div class="col-xs-2 ">
+						<label>左树可见:</label>
+					</div>
+					<div class="col-xs-2">
+						<label><input class="checkbox-slider colored-blue" type="checkbox" ng-model="chk" ng-click="toggleAuth()"><span class="text"></span></label>
+					</div>
+				</div>
+				<!-- 				<h6>按钮权限</h6> -->
+				<!-- 				<table class="table table-striped table-bordered table-hover table-condensed" id="simpledatatable"> -->
+				<!-- 					<thead class="bordered-blue"> -->
+				<!-- 						<tr> -->
+				<!-- 							<th></th> -->
+				<!-- 							<th>按钮名</th> -->
+				<!-- 						</tr> -->
+				<!-- 					</thead> -->
+				<!-- 					<tbody> -->
+				<!-- 						<tr ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size"> -->
+				<!-- 							<td><label><input type="checkbox" checklist-model="user.roles" checklist-value="obj.id"><span class="text"></span></label></td> -->
+				<!-- 							<td>{{obj.user_id}}</td> -->
+				<!-- 						</tr> -->
+				<!-- 					</tbody> -->
+				<!-- 				</table> -->
+
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	app.controller('SysRoleViewCtrl', [ '$rootScope', '$scope', 'skylineService', '$stateParams', function($rootScope, $scope, skylineService, $stateParams) {
+		$scope.obj = {};
+		$scope.findById = function() {
+			skylineService.findById("sys_role", $stateParams.pkid, function(rdata) {
+				$scope.obj = rdata;
+			});
+		};
+		$scope.findById();
+		$scope.gotoback = function() {
+			skylineService.gotoPage("tlist/sys/role");
+		}
+	} ]);
+</script>
+<script type="text/javascript">
+	app.controller('MenuAuthCtrl', [ '$rootScope', '$scope', '$stateParams', '$timeout', 'skylineService', 'tip', function($rootScope, $scope, $stateParams, $timeout, skylineService, tip) {
+
+		var tree;
+
+		$scope.roleId = $stateParams.pkid;
+
+		$scope.chk = false;
+
+		$scope.toggleAuth = function() {
+			console.info($scope.chk);
+			if ($scope.chk) {
+				$scope.addMenuRoleRelation();
+			} else {
+				$scope.deleteMenuRoleRelation();
+			}
+		}
+
+		$scope.defaultFunc = function() {
+			tip.success("", "操作成功");
+		}
+
+		$scope.addMenuRoleRelation = function() {
+			skylineService.invokeFun("insertMenuRoleRelation", {
+				pbean : {
+					"menu_id" : $scope.menuId,
+					"role_id" : $scope.roleId
+				}
+			}, $scope.defaultFunc, $scope);
+			if($scope.parentMenuId !== '#'){
+				skylineService.invokeFun("insertMenuRoleRelation", {
+					pbean : {
+						"menu_id" : $scope.parentMenuId,
+						"role_id" : $scope.roleId
+					}
+				}, $scope.defaultFunc, $scope);
+			}
+		}
+
+		$scope.deleteMenuRoleRelation = function() {
+			skylineService.invokeFun("deleteMenuRoleRelation", {
+				pbean : {
+					"menu_id" : $scope.menuId,
+					"role_id" : $scope.roleId
+				}
+			}, $scope.defaultFunc, $scope);
+		}
+
+		$scope.findMenuRoleRelation = function() {
+			skylineService.invokeFun("findMenuRoleRelation", {
+				pbean : {
+					"menu_id" : $scope.menuId,
+					"role_id" : $scope.roleId
+				}
+			}, $scope.findResultHandler, $scope);
+		}
+
+		$scope.findResultHandler = function(rdata) {
+			if (rdata.isSucceeded && rdata.retVals.rst!==null) {
+				$scope.chk = true;
+			} else {
+				$scope.chk = false;
+			}
+		}
+
+		$scope.menudata = [ {
+			label : 'loading...',
+			children : []
+		} ];
+
+		$scope.menuHandler = function(menu) {
+			console.info(menu);
+			$scope.menuName = menu.label;
+			$scope.flashOp(menu);
+		}
+
+		$scope.flashOp = function(menu) {
+			$scope.menuId = menu.id;
+			$scope.parentMenuId = menu.parent;
+			$scope.findMenuRoleRelation();
+		}
+
+		$scope.init = function() {
+			skylineService.invokeFun("getTreeMenuAuth", {
+				pbean : {
+					"id" : 0
+				}
+			}, $scope.handlerInit, $scope);
+		}
+
+		$scope.handlerInit = function(rdata) {
+			if (rdata.isSucceeded) {
+				console.info(rdata.retVals.rst);
+				$scope.menudata = rdata.retVals.rst;
+			}
+		}
+
+		$scope.menuTree = tree = {};
+
+		$scope.init();
+
+		$timeout(function() {
+			return tree.expand_all();
+		}, 1000);
+
+	} ]);
+</script>

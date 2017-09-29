@@ -1,0 +1,28 @@
+{
+	"sexes":{
+		"stype":"text",
+		"options":[
+			{
+				"value":"male",
+				"text":"男"
+			},
+			{
+				"value":"famale",
+				"text":"女"
+			}
+		]
+	},
+	"s_isOpen":{
+		"stype":"text",
+		"options":[
+			{
+				"value":"0",
+				"text":"启用"
+			},
+			{
+				"value":"1",
+				"text":"停用"
+			}
+		]
+	}
+}

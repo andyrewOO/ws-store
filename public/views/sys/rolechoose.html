@@ -1,0 +1,325 @@
+<div class="col-lg-12 col-sm-12 col-xs-12" ng-controller="SysRoleViewCtrl"  style="padding-left: 0px; padding-right: 0px;">
+	<div class="widget radius-bordered" style="margin: 0 0 5px">
+		<div class="widget-header bordered-bottom bordered-sky">
+			<span class="widget-caption">角色用户维护</span>
+			<div class="widget-buttons buttons-bordered">
+				<button id="no" class="btn btn-primary shiny btn-sm" type="button" ng-click="gotoback()">
+					<i class="fa fa-sign-out"></i>返回
+				</button>
+			</div>
+		</div>
+		<div class="widget-body grid-example">
+			<div class="row">
+				<div class="col-sm-2">
+					<span>角色ID:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_id}}</span>
+				</div>
+				<div class="col-sm-2">
+					<span>角色名:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_name}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<span>角色描述:</span>
+				</div>
+				<div class="col-sm-4">
+					<span>{{obj.role_desc}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-controller="SysUserListCtrl">
+	<div class="row">
+		<div class="col-lg-12 col-sm-12 col-xs-12">
+			<div class="widget radius-bordered">
+				<div class="widget-header bordered-bottom">
+					<span class="widget-caption">关联的用户信息</span>
+					<div class="widget-buttons buttons-bordered">
+						<button class="btn btn-primary shiny btn-sm" ng-click="open('','userSelect.html')">
+							<i class="fa fa-plus"></i>添加
+						</button>
+					</div>
+				</div>
+				<div class="widget-body well with-footer">
+					<table class="table table-striped table-bordered table-hover table-condensed">
+						<thead class="">
+							<tr>
+								<th>序号</th>
+								<th>登录ID</th>
+								<th>用户名称</th>
+								<th>启用状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+								<td>{{(objs.page.index-1)*objs.page.size+$index+1}}</td>
+								<td>{{obj.user_id}}</td>
+								<td>{{obj.user_name}}</td>
+								<td>{{obj.is_open | f_isopen }}</td>
+								<td value="obj.id"><a class="btn btn-default btn-xs shiny danger icon-only tooltip-blue" tooltip-placement="top" tooltip="删除" href="#" ng-click="remove(obj.id)"> <i class="fa fa-close"></i>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="footer" style="margin-right: 10px;">
+						<pagination class="pagination-sm pull-right" total-items="objs.colume|filter:objs.filter|size" ng-model="objs.page.index" max-size="9" items-per-page="objs.page.size" boundary-links="true"></pagination>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/ng-template" id="userSelect.html">
+<div class="modal-header">
+	<h4 class="modal-title">用户选择器</h4>
+</div>
+<div class="modal-body">
+	<table class="table table-striped table-bordered table-hover table-condensed" id="simpledatatable">
+		<thead class="bordered-blue">
+			<tr>
+				<th></th>
+				<th>登录ID</th>
+				<th>用户名</th>
+			</tr>
+           <tr>
+			   <td><label><input type="checkbox" ng-model="isChecked" ng-click="checkAll()"><span class="text"></span></label></td>
+			   <td><input id="login_name" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.login_name" name="login_name" /></td>
+			   <td><input id="user_name" class="form-control input-xs" type="text" style="width: 100%;" ng-model="objs.filter.user_name" name="user_name" /></td>
+		  </tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+				<td><label><input type="checkbox" checklist-model="user.roles" checklist-value="obj.id"><span class="text"></span></label></td>
+				<td>{{obj.user_id}}</td>
+				<td>{{obj.user_name}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-blue" ng-click="ok()">确定</button>
+	<button class="btn btn-warning" ng-click="cancel()">取消</button>
+</div>
+</script>
+
+<script type="text/javascript">
+	var s_isOpen = [ {
+		"value" : "0",
+		"text" : "启用"
+	}, {
+		"value" : "1",
+		"text" : "停用"
+	} ];
+	app.filter('f_isopen', function() {
+		return function(items) {
+			for ( var a in s_isOpen) {
+				if (s_isOpen[a].value == items) {
+					return s_isOpen[a].text;
+				}
+			}
+			return "未定义";
+		}
+	});
+
+	app.controller('SysUserListCtrl', [ '$rootScope', '$scope', '$modal', 'skylineService', '$stateParams', function($rootScope, $scope, $modal, skylineService, $stateParams) {
+		//alert($stateParams.pkid);
+		$scope.s_isOpen_scope = s_isOpen;
+		$scope.roleId = $stateParams.pkid;
+
+		$scope.userids = [];
+
+		$scope.handleResult = function(rdata) {
+			var dtable = new skyline.DataTable(rdata.retVals.rst.fields, rdata.retVals.rst.subValues);
+			console.info('tlist findAll');
+			console.info(rdata);
+			$scope.objs = {};
+			$scope.objs.colume = dtable.getAllRecords();
+			//for (u in $scope.objs.colume) {
+			//	$scope.userids.push(u.id);
+			//}
+			$scope.objs.page = {
+				size : 5,
+				index : 1
+			};
+		};
+		$scope.getAllRecords = function() {
+			skylineService.invokeFun("findUserByRoleId", {
+				pbean : {
+					"id" : $scope.roleId
+				}
+			}, $scope.handleResult, $scope);
+
+			/* skylineService.findAll("sys_user", function(rdata) {
+				console.info('tlist findAll');
+				$scope.objs = {};
+				$scope.objs.colume = rdata;
+				$scope.objs.page = {
+					size : 9,
+					index : 1
+				};
+				$scope.$apply();
+			}); */
+		};
+
+		$scope.getAllRecords();
+
+		$scope.s_isOpen = {};
+		$scope.goAdd = function() {
+			skylineService.gotoPage("tadd/sys/user");
+		}
+
+		$scope.handleDeleteResult = function(rdata) {
+			if (rdata.isSucceeded) {
+				$scope.getAllRecords();
+			}
+		}
+
+		$scope.remove = function(id) {
+			skylineService.invokeFun("deleteUserRoleRelation", {
+				pbean : {
+					"user_id" : id,
+					"role_id" : $scope.roleId
+				}
+			}, $scope.handleDeleteResult, $scope);
+		}
+
+		$scope.view = function(id) {
+			skylineService.gotoPage("tview/sys/user?id=" + id);
+		}
+
+		$scope.goEdit = function(id) {
+			skylineService.gotoPage("tedit/sys/user?id=" + id);
+		}
+
+		$scope.insertResult = function(rdata) {
+			if (rdata.isSucceeded) {
+				console.info("find All records");
+				$scope.getAllRecords();
+			} else {
+				alert("插入数据记录失败=>\n" + rdata.message);
+			}
+		}
+
+		var packer = new skyline.PackUtil();
+		$scope.insert = function(users) {
+			var tbeans = new packer.Seq(users);
+			var pbean = {
+				pbean : tbeans
+			}
+			console.info("pbean:");
+			console.info(pbean);
+			skylineService.invokeFun("insertUserRoleRelation", pbean, $scope.insertResult, $scope);
+		}
+
+		$scope.open = function(windowClass, templateUrl, size) {
+
+			var modalInstance = $modal.open({
+				windowClass : windowClass,
+				templateUrl : templateUrl,
+				controller : 'UserChooseCtrl',
+				size : size,
+				resolve : {
+					items : function() {
+						return $scope.objs.colume;
+					}
+				}
+			});
+
+			modalInstance.result.then(function(selectedItem) {
+				console.info(selectedItem);
+				if (selectedItem) {
+					$scope.s = [];
+					angular.forEach(selectedItem, function(userid) {
+						var p = {
+							"user_id" : userid,
+							"role_id" : $scope.roleId
+						};
+						$scope.s.push(p);
+					});
+					console.info($scope.s)
+					$scope.insert($scope.s);
+				}
+			}, function() {
+				//$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+
+	} ]);
+
+	app.controller('UserChooseCtrl', function($scope, $modalInstance, items, skylineService) {
+
+		$scope.userids = items;
+
+		console.info($scope.userids);
+
+		$scope.user = {
+			roles : []
+		};
+
+		$scope.selectAll = false;
+
+		$scope.checkAll = function() {
+			if ($scope.selectAll) {
+				$scope.user.roles = [];
+				$scope.selectAll = false;
+			} else {
+				$scope.user.roles = $scope.objs.colume.map(function(item) {
+					return item.id;
+				});
+				$scope.selectAll = true;
+			}
+		};
+
+		$scope.uncheckAll = function() {
+			$scope.user.roles = [];
+		};
+
+		$scope.getAllRecords = function() {
+			skylineService.findAll("sys_user", function(rdata) {
+				console.info('tlist findAll');
+				$scope.objs = {};
+				$scope.objs.colume = rdata;
+				$scope.objs.page = {
+					size : 9,
+					index : 1
+				};
+				$scope.$apply();
+			});
+		};
+
+		$scope.getAllRecords();
+
+		$scope.ok = function() {
+			$modalInstance.close($scope.user.roles);
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
+	});
+</script>
+
+
+<script type="text/javascript">
+	app.controller('SysRoleViewCtrl', [ '$rootScope', '$scope', 'skylineService', '$stateParams', function($rootScope, $scope, skylineService, $stateParams) {
+		$scope.obj = {};
+		$scope.findById = function() {
+			skylineService.findById("sys_role", $stateParams.pkid, function(rdata) {
+				$scope.obj = rdata;
+			});
+		};
+		$scope.findById();
+		$scope.gotoback = function() {
+			skylineService.gotoPage("tlist/sys/role");
+		}
+	} ]);
+</script>

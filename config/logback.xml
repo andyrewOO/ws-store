@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Doc: http://logback.qos.ch/manual/configuration.html -->
+<!-- This config file will be automatically reloaded every minute -->
+<configuration scan="true" scanPeriod="60 seconds">
+	<!-- Set to INFO to avoid noisy log -->
+	<logger name="io.netty" level="INFO" />
+	<logger name="org.fusesource.scalate" level="INFO" />
+	<logger name="org.fusesource.scalate.util.ClassPathBuilder"
+		level="ERROR" />
+
+
+	<appender name="ACTION"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>./log/action.log</file>
+		<encoder>
+			<pattern>[%level] [%d{yy-MM-dd HH-mm-ss}] [%thread] %c{1}: %m%n
+			</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>./log/action-%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+			<minIndex>50</minIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>200MB</maxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="TransFILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>./log/trans.log</file>
+		<encoder>
+			<pattern>[%level] [%d{yy-MM-dd HH:mm:ss}] [%thread] %c: %m%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>./log/trans-%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>50</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- Action 的日志文件 -->
+	<logger name="com.egfbank.tfemp.action.esb" level="INFO"
+		addtivity="false">
+		<appender-ref ref="ACTION"></appender-ref>
+	</logger>
+
+	<!-- 所有交易的日志文件 -->
+	<logger name="com.egfbank.tfemp.actor" level="INFO" addtivity="false">
+		<appender-ref ref="TransFILE"></appender-ref>
+	</logger>
+
+	<!-- Log to console in development mode -->
+	<if condition='!property("xitrum.mode").contains("production")'>
+		<then>
+			<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+				<encoder>
+					<pattern>[%level] [%d{yy-MM-dd HH:mm:ss}] [%thread] %c{1}: %m%n
+					</pattern>
+				</encoder>
+			</appender>
+
+			<!-- Set to TRACE to see network transmission -->
+			<root level="DEBUG">
+				<appender-ref ref="CONSOLE" />
+			</root>
+		</then>
+	</if>
+
+	<!-- Log to file in production mode -->
+	<if condition='property("xitrum.mode").contains("production")'>
+		<then>
+			<!-- 控制台 -->
+			<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+				<encoding>UTF-8</encoding>
+				<layout class="ch.qos.logback.classic.PatternLayout">
+					<pattern>[%level] [%d{yy-MM-dd HH:mm:ss}] [%thread] %c: %m%n
+					</pattern>
+				</layout>
+			</appender>
+
+			<appender name="FILE"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>./log/xitrum.log</file>
+				<encoder>
+					<pattern>[%level] [%d{yy-MM-dd HH:mm:ss}] [%thread] %c: %m%n
+					</pattern>
+				</encoder>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+					<fileNamePattern>./log/xitrum-%i.log.zip</fileNamePattern>
+					<minIndex>1</minIndex>
+					<maxIndex>50</maxIndex>
+				</rollingPolicy>
+				<triggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+					<maxFileSize>100MB</maxFileSize>
+				</triggeringPolicy>
+			</appender>
+
+			<!-- 异常日志 -->
+			<appender name="ErrorFile"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>./log/xitrum-error.log</file>
+				<encoder>
+					<pattern>[%level] [%d{yy-MM-dd HH:mm:ss}] [%thread] %c: %m%n
+					</pattern>
+				</encoder>
+
+				<!-- 过滤日志请求级别 -->
+				<filter class="ch.qos.logback.classic.filter.LevelFilter">
+					<level>ERROR</level>
+					<onMatch>ACCEPT</onMatch>
+					<onMismatch>DENY</onMismatch>
+				</filter>
+
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+					<fileNamePattern>./log/xitrum-error-%i.log.zip</fileNamePattern>
+					<minIndex>1</minIndex>
+					<maxIndex>30</maxIndex>
+				</rollingPolicy>
+
+				<triggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+					<maxFileSize>10MB</maxFileSize>
+				</triggeringPolicy>
+			</appender>
+
+			<!-- Set to TRACE to see network transmission -->
+			<root level="INFO">
+				<appender-ref ref="CONSOLE" />
+				<appender-ref ref="FILE" />
+				<appender-ref ref="ErrorFile" />
+			</root>
+		</then>
+	</if>
+</configuration>
