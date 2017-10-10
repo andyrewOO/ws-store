@@ -1,7 +1,7 @@
 organization:="sjq.sbt"
 name:="wStore"
 version:="0.1-SNAPSHOT"
-scalaVersion:="2.11.6"
+scalaVersion:="2.11.7"
 
 scalacOptions ++= Seq("-deprecation","-feature","-unchecked")
 
