@@ -1,5 +1,5 @@
-name:="hello-sbt"
 organization:="sjq.sbt"
+name:="wStore"
 version:="0.1-SNAPSHOT"
 scalaVersion:="2.11.6"
 
@@ -35,6 +35,27 @@ libraryDependencies += "commons-dbutils" % "commons-dbutils" % "1.6"
 // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
 libraryDependencies += "commons-beanutils" % "commons-beanutils" % "1.9.2"
 
+// https://mvnrepository.com/artifact/com.jcraft/jsch
+libraryDependencies += "com.jcraft" % "jsch" % "0.1.53"
+
+// https://mvnrepository.com/artifact/com.esotericsoftware.kryo/kryo
+libraryDependencies += "com.esotericsoftware.kryo" % "kryo" % "2.21"
+
+// https://mvnrepository.com/artifact/com.esotericsoftware.minlog/minlog
+libraryDependencies += "com.esotericsoftware.minlog" % "minlog" % "1.2"
+
+
+// https://mvnrepository.com/artifact/org.objenesis/objenesis
+libraryDependencies += "org.objenesis" % "objenesis" % "1.2" % "test"
+
+// https://mvnrepository.com/artifact/com.esotericsoftware.reflectasm/reflectasm
+libraryDependencies += "com.esotericsoftware.reflectasm" % "reflectasm" % "1.07"
+
+// https://mvnrepository.com/artifact/org.ow2.asm/asm
+libraryDependencies += "org.ow2.asm" % "asm" % "4.0"
+
+// https://mvnrepository.com/artifact/oracle/ojdbc6
+libraryDependencies += "oracle" % "ojdbc6" % "11.2.0.3"
 
 // Precompile Scalate templates
 seq(scalateSettings:_*)
