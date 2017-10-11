@@ -36,15 +36,15 @@ class MGoodsSearchAction extends AppAction {
     case TEvent(_, _, content, _, _) => {
       content match {
         case page: Page => {
-          respondJson(AppQueryResult(true, "success", page.sum, page))
+          respondJson(AppQueryResult("0", "success", page.sum, page))
         }
         case _ => {
-          respondJson(AppQueryResult(false, "actorResError", 0, ""))
+          respondJson(AppQueryResult("-1", "actorResError", 0, ""))
         }
       }
     }
     case _ => {
-      respondJson(AppQueryResult(false, "actorResError", -1, ""))
+      respondJson(AppQueryResult("-1", "actorResError", -1, ""))
     }
   }
 }

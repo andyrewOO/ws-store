@@ -50,12 +50,11 @@ case class ExceptionReesponse(status:String,message:String,errorCode:String) ext
 
 /**
  * 查询结果返回值封装类
- * @return isSucceeded(TRUE操作成功,FALSE操作失败);
- * @return msg 返回消息;
- * @return total 总记录数;
- * @return data 数据;
+ * 查询返回值封装类
+ * 返回：flag:(0操作成功,-1操作失败)；msg:返回消息；total:数据条数；data:数据
  */
-case class AppQueryResult(isSucceeded:Boolean,msg:String,total:Int,data:AnyRef)
+case class AppQueryResult(flag: String,msg:String,total:Int,data:AnyRef)
+
 /**
  * 更新操作返回值封装类
  * @return isSucceeded(TRUE操作成功,FALSE操作失败);
