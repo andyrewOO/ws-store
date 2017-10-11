@@ -1,20 +1,13 @@
-package com.hfbank.action.base
+package com.andy.action.base
 
 import xitrum.SkipCsrfCheck
-import com.hfbank.action.BaseAppAction
+import com.andy.action.BaseAppAction
 import xitrum.annotation.POST
-import com.hfbank.constant.OperationUnit
-import scala.reflect.runtime.universe
-import com.hfbank.action.business.tenant.app.AppAddAction
-import com.hfbank.action.business.tenant.partion.PartionAddAction
-import com.hfbank.action.business.tenant.interfaces.InterfaceAddAction
-import com.hfbank.action.business.tenant.message.MessageAddAction
-import com.hfbank.action.business.tenant.source.SourceAddAction
-import com.hfbank.action.business.tenant.user.TenantUserAddAction
-import com.hfbank.action.business.source.queue.QueueAddAction
-import com.hfbank.action.business.source.engine.EngineAddAction
-import com.hfbank.action.business.source.queue.DBAddAction
-
+import com.andy.constant.BeanUnit
+import com.andy.action.business.mgoods.MGoodsAddAction
+import com.andy.action.business.morder.MOrderAddAction
+import com.andy.action.business.mpeople.MPeopleAddAction
+import com.andy.action.business.mreaddr.MReAddrAddAction
 
 /**
  * @author andy
@@ -24,15 +17,10 @@ class AddAction extends BaseAppAction with SkipCsrfCheck {
   def execute(): Unit = {
     val bizScence = param("unit")
     bizScence match {
-      case OperationUnit.TENANTUSER => forwardTo(classOf[TenantUserAddAction])
-      case OperationUnit.APP        => forwardTo(classOf[AppAddAction])
-      case OperationUnit.PARTION    => forwardTo(classOf[PartionAddAction])
-      case OperationUnit.INTERFACE  => forwardTo(classOf[InterfaceAddAction])
-      case OperationUnit.MESSAGE    => forwardTo(classOf[MessageAddAction])
-      case OperationUnit.SOURCE     => forwardTo(classOf[SourceAddAction])
-      case OperationUnit.QUEUE      => forwardTo(classOf[QueueAddAction])
-      case OperationUnit.ENGINE     => forwardTo(classOf[EngineAddAction])
-      case OperationUnit.DB         => forwardTo(classOf[DBAddAction])
+      case BeanUnit.MGOODS  => forwardTo(classOf[MGoodsAddAction])
+      case BeanUnit.MORDER  => forwardTo(classOf[MOrderAddAction])
+      case BeanUnit.MPEOPLE => forwardTo(classOf[MPeopleAddAction])
+      case BeanUnit.MREADDR => forwardTo(classOf[MReAddrAddAction])
     }
   }
 }

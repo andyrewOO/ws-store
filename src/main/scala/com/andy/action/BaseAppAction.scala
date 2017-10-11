@@ -1,4 +1,4 @@
-package com.hfbank.action
+package com.andy.action
 
 import xitrum.ActorAction
 import org.json4s._
@@ -84,6 +84,15 @@ private[action] trait BaseAppAction extends ActorAction {
         val json = parse(jsonString)
         getBean[A](json)
       }
+    }
+    bean
+  }
+
+  protected def getBean[A](jsonString: String)(implicit beanType: Manifest[A]): A = {
+    val bean = jsonString match {
+      case x: String =>
+        val json = parse(x)
+        getBean[A](json)
     }
     bean
   }

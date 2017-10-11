@@ -1,6 +1,6 @@
-package com.hfbank.mode
+package com.andy.mode
 
-import com.hfbank.actor.BizScene
+import com.andy.actor.BizScene
 
 import akka.actor.ActorRef
 

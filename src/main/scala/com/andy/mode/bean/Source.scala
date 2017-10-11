@@ -1,51 +1,70 @@
-package com.hfbank.mode.bean
+package com.andy.mode.bean
 
 /**
  * @author andy
  */
-case class SourceDB(
-    id: String,
-    dbType: String,
-    dbName: String,
-    url: String,
-    dbUserName: String,
-    password: String,
-    center: String,
-    description: String,
-    creationTime: String,
-    updatedTime: String,
-    creator: String,
-    updater: String,
-    status: String
-)
-    
-case class SourceEngine(
-    id: String,
-    clusterName: String,
-    url: String,
-    hostList: String,
-    standard: String,
-    center: String,
-    description: String,
-    creationTime: String,
-    updatedTime: String,
-    creator: String,
-    updater: String,
-    status: String
-)
+case class Mpeople(
+  id: String = "",
+  name: String = "",
+  age: String = "",
+  birthday: String = "",
+  phone: String = "",
+  gender: String = "",
+  weixin: String = "",
+  remark: String = "",
+  status: String = "")
 
-case class SourceQueue(
-  id:String,
-  name:String,
-  mqType:String,
-  messageid:String,
-  hostList:String,
-  topic:String,
-  center:String,
-  description:String,
-  creationtime:String,
-  creator:String,
-  updatedtime:String,
-  updater:String,
-  status:String    
-)
+case class MReAddres(
+  id: String = "",
+  pid: String = "",
+  province: String = "",
+  city: String = "",
+  region: String = "",
+  address: String = "",
+  phone: String = "",
+  receiver: String = "",
+  status: String = "")
+
+case class MOrder(
+  id: String = "",
+  commitId: String = "",
+  pid: String = "",
+  aid: String = "",
+  money: String = "",
+  ctime: String = "",
+  ptime: String = "",
+  dtime: String = "",
+  rtime: String = "",
+  utime: String = "",
+  status: String = "",
+  remark: String = "")
+
+case class MGoods(
+  id: String = "",
+  kind: String = "",
+  lprice: String = "",
+  sprice: String = "",
+  place: String = "",
+  describtion: String = "",
+  ctime: String = "",
+  dtime: String = "",
+  total: String = "",
+  remark: String = "",
+  status: String = "")
+
+case class MOrGoR(
+  id: String = "",
+  oid: String = "",
+  gid: String = "",
+  price: String = "",
+  discount: String = "",
+  count: String = "",
+  remark: String = "",
+  status: String = "")
+
+case class SUser(
+  id: String = "",
+  userId: String = "",
+  userName: String = "",
+  password: String = "",
+  status: String = "")

@@ -1,4 +1,4 @@
-package com.hfbank.util
+package com.andy.util
 
 import java.net.URLEncoder
 import java.sql.Timestamp

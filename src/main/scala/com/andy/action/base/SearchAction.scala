@@ -1,20 +1,14 @@
-package com.hfbank.action.base
+package com.andy.action.base
 
 import scala.reflect.runtime.universe
-import com.hfbank.action.BaseAppAction
-import com.hfbank.constant.OperationUnit
+import com.andy.action.BaseAppAction
 import xitrum.SkipCsrfCheck
 import xitrum.annotation.POST
-import com.hfbank.action.business.tenant.message.MessageSearchAction
-import com.hfbank.action.business.tenant.source.SourceSearchAction
-import com.hfbank.action.business.tenant.interfaces.InterfaceSearchAction
-import com.hfbank.action.business.tenant.app.AppSearchAction
-import com.hfbank.action.business.tenant.partion.PartionSearchAction
-import com.hfbank.action.business.tenant.user.TenantUserSearchAction
-import com.hfbank.action.business.source.queue.QueueSearchAction
-import com.hfbank.action.business.source.engine.EngineSearchAction
-import com.hfbank.action.business.tenant.source.SourceVSearchAction
-import com.hfbank.action.business.source.queue.DBSearchAction
+import com.andy.constant.BeanUnit
+import com.andy.action.business.morder.MOrderSearchAction
+import com.andy.action.business.mreaddr.MReAddrSearchAction
+import com.andy.action.business.mgoods.MGoodsSearchAction
+import com.andy.action.business.mpeople.MPeopleSearchAction
 
 /**
  * @author andy
@@ -24,16 +18,10 @@ class SearchAction extends BaseAppAction with SkipCsrfCheck {
   def execute(): Unit = {
     val bizScence = param("unit")
     bizScence match {
-      case OperationUnit.TENANTUSER => forwardTo(classOf[TenantUserSearchAction])
-      case OperationUnit.APP        => forwardTo(classOf[AppSearchAction])
-      case OperationUnit.PARTION    => forwardTo(classOf[PartionSearchAction])
-      case OperationUnit.INTERFACE  => forwardTo(classOf[InterfaceSearchAction])
-      case OperationUnit.MESSAGE    => forwardTo(classOf[MessageSearchAction])
-      case OperationUnit.SOURCE     => forwardTo(classOf[SourceSearchAction])
-      case OperationUnit.SOURCEV     => forwardTo(classOf[SourceVSearchAction])
-      case OperationUnit.QUEUE      => forwardTo(classOf[QueueSearchAction])
-      case OperationUnit.ENGINE     => forwardTo(classOf[EngineSearchAction])
-      case OperationUnit.DB     => forwardTo(classOf[DBSearchAction])
+      case BeanUnit.MGOODS  => forwardTo(classOf[MGoodsSearchAction])
+      case BeanUnit.MORDER  => forwardTo(classOf[MOrderSearchAction])
+      case BeanUnit.MPEOPLE => forwardTo(classOf[MPeopleSearchAction])
+      case BeanUnit.MREADDR => forwardTo(classOf[MReAddrSearchAction])
     }
   }
 }

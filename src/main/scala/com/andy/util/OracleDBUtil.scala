@@ -1,4 +1,4 @@
-package com.hfbank.util
+package com.andy.util
 
 import javax.sql.DataSource
 import java.sql.Connection
@@ -51,7 +51,7 @@ object OracleDBUtil {
    * @param ps
    * @param conn
    */
-  def close(rs: ResultSet, ps: PreparedStatement, conn: Connection): Unit = {
+  def close(rs: ResultSet = null, ps: PreparedStatement = null, conn: Connection = null): Unit = {
     try {
       if (rs != null)
         try {

@@ -1,4 +1,4 @@
-package com.hfbank.constant
+package com.andy.constant
 
 /**
  * @author win7

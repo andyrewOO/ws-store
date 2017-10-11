@@ -1,4 +1,4 @@
-package com.hfbank.mode
+package com.andy.mode
 
 /**
  * 返回结果封装
