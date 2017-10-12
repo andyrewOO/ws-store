@@ -64,7 +64,7 @@ case class UpdateResult(isSucceeded:Boolean,msg:String)
 
 case class SQLResponse(count: Int, msg: String)
 
-case class Page(start: Int, size: Int, sum: Int, result: List[Any]) 
+case class Page(start: Int = -1, size: Int = -1, sum: Int = 0, result: List[Any] = null) 
 
 /**
  * @param <T>: 查询对应的实体

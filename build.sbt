@@ -55,7 +55,11 @@ libraryDependencies += "com.esotericsoftware.reflectasm" % "reflectasm" % "1.07"
 libraryDependencies += "org.ow2.asm" % "asm" % "4.0"
 
 // https://mvnrepository.com/artifact/oracle/ojdbc6
-libraryDependencies += "oracle" % "ojdbc6" % "11.2.0.3"
+//libraryDependencies += "oracle" % "ojdbc6" % "11.2.0.3"
+
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.44"
+
 
 // Precompile Scalate templates
 seq(scalateSettings:_*)
