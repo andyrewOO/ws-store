@@ -1,0 +1,90 @@
+
+<div ng-controller="mgoodsListCtrl">
+	<div class="row">
+		<div class="col-lg-12 col-sm-12 col-xs-12">
+			<div class="widget no-header">
+				<div class="widget-body well with-footer">
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label>商品种类</label>
+								<select id="kind" class="form-control select2" name="kind"style="width:100%"ng-model="obj.kind">
+									<option value="0">A</option>
+									<option value="1">B</option>
+									<option value="2">C</option>
+									<option value="3">D</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label>商品描述</label> <span class="input-icon icon-right">
+									<input id="description" type="text" class="form-control"
+									name="txcode" placeholder="输入商品描述" ng-model="obj.description">
+								</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label>商品状态</label> 
+								<select id="status" class="form-control select2" name="status"style="width:100%"ng-model="obj.status">
+									<option value="0">A</option>
+									<option value="1">B</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-1">
+							<button type="submit" class="btn btn-primary shiny"
+								ng-disabled="form1.$invalid"
+								ng-click="submitSearchParam()">
+								<i class=""></i>查询
+							</button>
+						</div>
+					</div>
+
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<thead class="bordered-blue">
+							<tr>
+								<th>序号</th>
+								<th>商品编号</th>
+								<th>种类</th>
+								<th>进价</th>
+								<th>买价</th>
+								<th>进货地址</th>
+								<th>库存</th>
+								<th>商品描述</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+								<td>{{(objs.page.index-1)*objs.page.size+$index+1}}</td>
+								<td>{{obj.ID}}</td>
+								<td>{{obj.KIND}}</td>
+								<td>{{obj.LPRICE}}</td>
+								<td>{{obj.SPRICE}}</td>
+								<td>{{obj.PLACE}}</td>
+								<td>{{obj.TOTAL}}</td>
+								<td>{{obj.DESCRIPTION}}</td>
+								<td>{{obj.STATUS}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="footer" style="margin-right: 10px;">
+						<pagination class="pagination-sm pull-right"
+							total-items="objs.total"
+							ng-model="objs.page.index" 
+							max-size="9"
+							items-per-page="objs.page.size" 
+							boundary-links="true"
+							ng-click="showPage(objs.page.index)"></pagination>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -45,7 +45,7 @@ case class MGoods(
   lprice: String = "",
   sprice: String = "",
   place: String = "",
-  describtion: String = "",
+  description: String = "",
   ctime: String = "",
   dtime: String = "",
   total: String = "",

@@ -56,7 +56,7 @@ trait MGoodsDao extends OracleService {
 
     val whereSqlTmp = new StringBuffer
 
-    if (StringUtils.isNotBlank(mgoods.describtion)) whereSqlTmp.append(s" and describtion like '%${mgoods.describtion}%'")
+    if (StringUtils.isNotBlank(mgoods.description)) whereSqlTmp.append(s" and describtion like '%${mgoods.description}%'")
     if (StringUtils.isNotBlank(mgoods.place)) whereSqlTmp.append(s" and place like '%${mgoods.place}%'")
     if (StringUtils.isNotBlank(mgoods.kind)) whereSqlTmp.append(s" and kind = '${mgoods.kind}'")
     if (StringUtils.isNotBlank(mgoods.status)) whereSqlTmp.append(s" and status = '${mgoods.status}'")

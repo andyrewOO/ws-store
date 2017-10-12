@@ -9,11 +9,12 @@ import com.andy.mode.TEvent
 import com.andy.util.HfbkUtil
 import com.andy.mode.AppQueryResult
 import com.andy.actor.MGoodsSearchBiz
+import xitrum.SkipCsrfCheck
 
 /**
  * @author andy
  */
-class MGoodsSearchAction extends AppAction {
+class MGoodsSearchAction extends AppAction with SkipCsrfCheck{
   def execute(): Unit = {
     log.info(s"Start MGoodsSearchAction")
 
