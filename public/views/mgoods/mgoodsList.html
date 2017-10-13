@@ -38,7 +38,7 @@
 						<div class="col-sm-1">
 							<button type="submit" class="btn btn-primary shiny"
 								ng-disabled="form1.$invalid"
-								ng-click="submitSearchParam()">
+								ng-click="submitSearchParam(1,15)">
 								<i class=""></i>查询
 							</button>
 						</div>
@@ -61,16 +61,16 @@
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="obj in objs.colume|filter:objs.filter|paging:objs.page.index:objs.page.size">
+								ng-repeat="obj in objs.colume">
 								<td>{{(objs.page.index-1)*objs.page.size+$index+1}}</td>
-								<td>{{obj.ID}}</td>
-								<td>{{obj.KIND}}</td>
-								<td>{{obj.LPRICE}}</td>
-								<td>{{obj.SPRICE}}</td>
-								<td>{{obj.PLACE}}</td>
-								<td>{{obj.TOTAL}}</td>
-								<td>{{obj.DESCRIPTION}}</td>
-								<td>{{obj.STATUS}}</td>
+								<td>{{obj.id}}</td>
+								<td>{{obj.kind}}</td>
+								<td>{{obj.lprice}}</td>
+								<td>{{obj.sprice}}</td>
+								<td>{{obj.place}}</td>
+								<td>{{obj.total}}</td>
+								<td>{{obj.description}}</td>
+								<td>{{obj.status}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -81,7 +81,7 @@
 							max-size="9"
 							items-per-page="objs.page.size" 
 							boundary-links="true"
-							ng-click="showPage(objs.page.index)"></pagination>
+							ng-click="showPage()"></pagination>
 					</div>
 				</div>
 			</div>
