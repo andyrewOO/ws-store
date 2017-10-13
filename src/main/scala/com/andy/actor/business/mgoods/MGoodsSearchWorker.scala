@@ -21,10 +21,10 @@ class MGoodsSearchWorker extends BizActorWorker with MGoodsDao {
           case mgoods: MGoods => (search(mgoods, page), getTotal(mgoods))
         }
 
-        log.info(s"Query total:${total.head.getOrElse("TOTAL", "")}")
+        log.info(s"Query total:${total.head.getOrElse("total", "")}")
         log.info(s"Query result size:${queryRes.size}")
 
-        page.copy(result = queryRes, sum = total.head.getOrElse("TOTAL", "0").toInt)
+        page.copy(result = queryRes, sum = total.head.getOrElse("total", "0").toInt)
       }
     }
     Some(TEvent(HfbkUtil.getUUID(), MGoodsSearchBiz, paageRes, HfbkUtil.getTime(), Some(self)))

@@ -79,6 +79,7 @@ scalacOptions += "-P:xgettext:xitrum.I18n"
 
 // For "sbt console"
 unmanagedClasspath in Compile <+= (baseDirectory) map { bd => Attributed.blank(bd / "config")}
+unmanagedClasspath in Compile <+= (baseDirectory) map { bd => Attributed.blank(bd / "module")}
 // For "sbt run"
 unmanagedClasspath in Runtime <+= (baseDirectory) map { bd => Attributed.blank(bd / "config")}
 

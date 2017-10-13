@@ -10,7 +10,7 @@ import com.andy.constant.SearchOperater
 /**
  * @author andy
  */
-trait MGoodsDao extends OracleService {
+trait MGoodsDao extends MySqlService {
 
   /**
    *  查询
@@ -20,7 +20,7 @@ trait MGoodsDao extends OracleService {
     // 分页参数
     val index = page.start
     val size = page.size
-    val begin = (index - 1) * size + 1
+    val begin = (index - 1) * size
     val end = index * size
 
     val selectSqlTmp = s"select id, kind, lprice, sprice, place, describtion, ctime, dtime, total, remark, status from ${TableName.MGOODS} where 1=1"
@@ -49,6 +49,8 @@ trait MGoodsDao extends OracleService {
 
     val sql = selectSqlTmp + whereSql
 
+    log.info(s"Get Total:${sql}")
+    
     query(sql, Seq())
   }
 

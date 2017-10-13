@@ -2,12 +2,13 @@ package com.andy.actor
 
 import com.andy.mode.TEvent
 import akka.actor.actorRef2Scala
-import com.andy.util.OracleDBUtil
 import com.andy.actor.dao.RepetitionException
+import com.andy.util.MySqlDBUtil
 
 trait BizActorWorker extends DefaultWorker {
   // 业务模块通用的数据库连接
-  implicit val connect = OracleDBUtil.getConn()
+  implicit val connect = MySqlDBUtil.getConn()
+  connect.setAutoCommit(false)
 
   override def receive = {
     case request: TEvent[_] => {
@@ -35,7 +36,7 @@ trait BizActorWorker extends DefaultWorker {
         }
       } finally {
         // 关闭连接
-        OracleDBUtil.close(conn = connect)
+        MySqlDBUtil.close(conn = connect)
       }
     }
   }
