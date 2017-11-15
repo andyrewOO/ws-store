@@ -23,7 +23,7 @@ trait MGoodsDao extends MySqlService {
     val begin = (index - 1) * size
     val end = index * size
 
-    val selectSqlTmp = s"select id, kind, lprice, sprice, place, describtion, ctime, dtime, total, remark, status from ${TableName.MGOODS} where 1=1"
+    val selectSqlTmp = s"select id, kind, lprice, sprice, place, description, ctime, dtime, total, remark, status from ${TableName.MGOODS} where 1=1"
     val whereSql = new StringBuffer
 
     whereSql.append(getWhere(mgoods))
@@ -50,7 +50,7 @@ trait MGoodsDao extends MySqlService {
     val sql = selectSqlTmp + whereSql
 
     log.info(s"Get Total:${sql}")
-    
+
     query(sql, Seq())
   }
 
@@ -58,7 +58,7 @@ trait MGoodsDao extends MySqlService {
 
     val whereSqlTmp = new StringBuffer
 
-    if (StringUtils.isNotBlank(mgoods.description)) whereSqlTmp.append(s" and describtion like '%${mgoods.description}%'")
+    if (StringUtils.isNotBlank(mgoods.description)) whereSqlTmp.append(s" and description like '%${mgoods.description}%'")
     if (StringUtils.isNotBlank(mgoods.place)) whereSqlTmp.append(s" and place like '%${mgoods.place}%'")
     if (StringUtils.isNotBlank(mgoods.kind)) whereSqlTmp.append(s" and kind = '${mgoods.kind}'")
     if (StringUtils.isNotBlank(mgoods.status)) whereSqlTmp.append(s" and status = '${mgoods.status}'")
@@ -71,9 +71,21 @@ trait MGoodsDao extends MySqlService {
    */
   def insert(mgoods: MGoods)(implicit connect: Connection): Int = {
 
-    val sql = ""
+    val sql = s"insert into ${TableName.MGOODS} (id, kind, lprice, sprice, place, description, ctime, dtime, total, remark, status) values(?,?,?,?,?,?,?,?,?,?,?)"
+    val param = Seq(
+      mgoods.id,
+      mgoods.kind,
+      mgoods.lprice,
+      mgoods.sprice,
+      mgoods.place,
+      mgoods.description,
+      mgoods.ctime,
+      mgoods.dtime,
+      mgoods.total,
+      mgoods.remark,
+      mgoods.status)
 
-    executeUpdate(sql, Seq())
+    executeUpdate(sql, param)
   }
 
   /**

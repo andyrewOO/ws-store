@@ -1,5 +1,7 @@
 package com.andy.mode.bean
 
+import scala.beans.BeanProperty
+
 /**
  * @author andy
  */

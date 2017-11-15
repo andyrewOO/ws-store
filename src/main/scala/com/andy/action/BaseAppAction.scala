@@ -5,6 +5,7 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import scala.util.parsing.json.JSON
 import org.json4s.DefaultFormats
+import scala.reflect.ClassTag
 
 private[action] trait BaseAppAction extends ActorAction {
   var params: Map[String, String] = null
@@ -78,7 +79,7 @@ private[action] trait BaseAppAction extends ActorAction {
   /**
    * 根据JSON,返回泛型所对应的对象
    */
-  protected def getBean[A](p: Option[String])(implicit beanType: Manifest[A]): A = {
+  protected def getBean[A: Manifest](p: Option[String]): A = {
     val bean = p match {
       case Some(jsonString) => {
         val json = parse(jsonString)
@@ -88,7 +89,7 @@ private[action] trait BaseAppAction extends ActorAction {
     bean
   }
 
-  protected def getBean[A](jsonString: String)(implicit beanType: Manifest[A]): A = {
+  protected def getBean[A: Manifest](jsonString: String): A = {
     val bean = jsonString match {
       case x: String =>
         val json = parse(x)
@@ -100,7 +101,7 @@ private[action] trait BaseAppAction extends ActorAction {
   /**
    * 根据JValue 获取泛型所对应的对象
    */
-  protected def getBean[A](json: JValue)(implicit beanType: Manifest[A]): A = {
+  protected def getBean[A: Manifest](json: JValue): A = {
     implicit val formats = DefaultFormats
     json.extract[A]
   }
