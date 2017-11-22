@@ -14,7 +14,7 @@ import com.andy.util.MySqlDBUtil
 object MGoodsDaoTest extends MGoodsDao {
   def main(args: Array[String]): Unit = {
     implicit val connect = MySqlDBUtil.getConn()
-    val goods = MGoods("11110", lprice = 100)
+    val goods = MGoods("11110111", lprice = 100)
     insert(goods)
     connect.commit()
   }

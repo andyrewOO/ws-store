@@ -60,7 +60,7 @@ case class AppQueryResult(flag: String, msg: String, total: Int, data: AnyRef)
  * @return isSucceeded(TRUE操作成功,FALSE操作失败);
  * @return msg 返回消息;
  */
-case class UpdateResult(isSucceeded: Boolean, msg: String)
+case class UpdateResult(isSucceeded: Boolean = true, msg: String = "success")
 
 case class SQLResponse(count: Int, msg: String)
 

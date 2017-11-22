@@ -1,14 +1,33 @@
 package com.andy.action
 
-import xitrum.ActorAction
-import org.json4s._
-import org.json4s.jackson.JsonMethods._
+import scala.reflect.runtime.universe
 import scala.util.parsing.json.JSON
 import org.json4s.DefaultFormats
-import scala.reflect.ClassTag
+import org.json4s.JValue
+import org.json4s.jackson.JsonMethods.parse
+import org.json4s.jvalue2extractable
+import org.json4s.string2JsonInput
+import com.andy.actor.BaseBiz
+import com.andy.actor.BizScene
+import com.andy.actor.MGoodsAddBiz
+import com.andy.actor.MGoodsSearchBiz
+import com.andy.actor.MGoodsUpdateBiz
+import com.andy.actor.MOrderAddBiz
+import com.andy.actor.MOrderSearchBiz
+import com.andy.actor.MOrderUpdateBiz
+import com.andy.actor.MPeopleAddBiz
+import com.andy.actor.MPeopleSearchBiz
+import com.andy.actor.MPeopleUpdateBiz
+import com.andy.actor.MReAddrAddBiz
+import com.andy.constant.BeanUnit
+import com.andy.constant.OperType
+import xitrum.ActorAction
+import com.andy.actor.MReAddrSearchBiz
+import com.andy.actor.MReAddrUpdateBiz
 
 private[action] trait BaseAppAction extends ActorAction {
   var params: Map[String, String] = null
+
   //验证是否登录
   private[action] def checkLogin {}
   //验证是否有该功能权限
@@ -26,6 +45,7 @@ private[action] trait BaseAppAction extends ActorAction {
       /*SeriDeseri.fromJson[Map[String,String]](this.requestContentString)*/
     }
   }
+
   /**
    * 前置过滤器
    */
@@ -105,4 +125,5 @@ private[action] trait BaseAppAction extends ActorAction {
     implicit val formats = DefaultFormats
     json.extract[A]
   }
+
 }

@@ -14,9 +14,10 @@ import xitrum.SkipCsrfCheck
 /**
  * @author andy
  */
-class MGoodsSearchAction extends AppAction with SkipCsrfCheck{
-  def execute(): Unit = {
-    log.info(s"Start MGoodsSearchAction")
+class MGoodsSearchAction extends AppAction with SkipCsrfCheck {
+
+  def handle() = {
+    log.info(s"Start ${BIZ_SCENE}")
 
     val objBean = paramo("mgoods") match {
       case Some(jsonString) => getBean[MGoods](jsonString)
@@ -29,11 +30,10 @@ class MGoodsSearchAction extends AppAction with SkipCsrfCheck{
 
     val queryParam = AppQueryParam(objBean, page)
 
-    ActorHolder.proxyActor ! TEvent(HfbkUtil.getUUID(), MGoodsSearchBiz, queryParam, HfbkUtil.getTime(), Some(self))
-    context.become(this.rst)
+    Some(queryParam)
   }
 
-  def rst: Receive = {
+  def receiveResponse: Receive = {
     case TEvent(_, _, content, _, _) => {
       content match {
         case page: Page => {

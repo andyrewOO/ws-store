@@ -18,7 +18,8 @@ class MGoodsSearchWorker extends BizActorWorker with MGoodsDao {
     val paageRes = event.content match {
       case AppQueryParam(queryBean, page) => {
         val (queryRes, total) = queryBean match {
-          case mgoods: MGoods => (search(mgoods, page), getTotal(mgoods))
+          case mgoods: MGoods => 
+            (search(mgoods, page), getTotal(mgoods))
         }
 
         log.info(s"Query total:${total.head.getOrElse("total", "")}")

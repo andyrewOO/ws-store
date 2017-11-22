@@ -5,6 +5,9 @@ package com.andy.actor
  */
 sealed trait BizScene
 
+//基础业务类型
+case object BaseBiz extends BizScene
+
 //商品新增
 case object MGoodsAddBiz extends BizScene
 //商品查询

@@ -1,22 +1,23 @@
 package com.andy.actor
 
-import akka.actor.Actor
-import akka.actor.Props
-import xitrum.Log
-import com.andy.mode.TEvent
-import akka.actor.actorRef2Scala
 import com.andy.actor.business.mgoods.MGoodsAddWorker
 import com.andy.actor.business.mgoods.MGoodsSearchWorker
 import com.andy.actor.business.mgoods.MGoodsUpdateWorker
 import com.andy.actor.business.morder.MOrderAddWorker
+import com.andy.actor.business.morder.MOrderSearchWorker
+import com.andy.actor.business.morder.MOrderUpdateWorker
+import com.andy.actor.business.mpeople.MPeopleAddWorker
 import com.andy.actor.business.mpeople.MPeopleSearchWorker
 import com.andy.actor.business.mpeople.MPeopleUpdateWorker
 import com.andy.actor.business.mreaddr.MReAddrAddWorker
 import com.andy.actor.business.mreaddr.MReAddrSearchWorker
-import com.andy.actor.business.mpeople.MPeopleAddWorker
 import com.andy.actor.business.mreaddr.MReAddrUpdateWorker
-import com.andy.actor.business.morder.MOrderSearchWorker
-import com.andy.actor.business.morder.MOrderUpdateWorker
+import com.andy.mode.TEvent
+
+import akka.actor.Actor
+import akka.actor.Props
+import akka.actor.actorRef2Scala
+import xitrum.Log
 
 /**
  * Actor流程调用代理类
@@ -32,6 +33,7 @@ class ProxyActor extends Actor with Log {
     case event: TEvent[_] => {
       log.info("To match case,tradeType: " + event.bizScene)
       event.bizScene match {
+        case BaseBiz          => log.error("Miss BizScene")
         // 商品
         case MGoodsSearchBiz  => context.actorOf(Props[MGoodsSearchWorker]) ! event
         case MGoodsAddBiz     => context.actorOf(Props[MGoodsAddWorker]) ! event
